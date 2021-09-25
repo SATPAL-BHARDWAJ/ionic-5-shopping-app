@@ -1,0 +1,40 @@
+.font-size-1 {
+    font-size: 1rem;
+}
+
+.text-small {
+    font-size: 0.8rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.ion-color-dark {
+    color: var(--ion-color-dark);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-gray {
+    color: gray;
+}
+
+.add-to-cart-modal {
+    --width: 70%;
+    --height: 185px;
+}
+/* Global modal transparent*/
+.sc-ion-modal-md-h {
+    --background: none;
+}
+.sc-ion-modal-ios-h {
+    --background: none;
+}
+/* End Global modal transparent */

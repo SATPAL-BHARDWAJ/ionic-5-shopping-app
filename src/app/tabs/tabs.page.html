@@ -1,0 +1,21 @@
+<ion-tabs>
+
+  <ion-tab-bar color="danger" slot="bottom">
+    <ion-tab-button layout="label-hide" tab="tab1">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button layout="label-hide" tab="tab2">
+      <ion-icon name="cart"></ion-icon>
+      <ion-label>Cart</ion-label>
+      <ion-badge *ngIf="cart.unseen > 0" color="warning">{{ cart.unseen }}</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button layout="label-hide" tab="tab3">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Account</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

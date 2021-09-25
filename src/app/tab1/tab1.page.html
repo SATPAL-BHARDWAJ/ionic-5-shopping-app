@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <div slot="start" style="padding: 0px 10px;">
+      <img src="assets/images/logo.svg" alt="" srcset="" style="width: 30px;">
+    </div>
+    
+    <ion-searchbar mode="ios" style="padding: 16px 0px;"></ion-searchbar>
+
+    <ion-buttons slot="end">
+      <app-notification-bell></app-notification-bell>
+    </ion-buttons>
+    
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="bannerImages && bannerImages.length">
+    <ion-slide *ngFor="let image of bannerImages">  
+      <img class="banner-image" [src]="image?.imgurl || 'assets/imgs/divisions.svg'"/>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-between ion-padding-vertical">
+      <ion-col size="4">
+        <div class="font-bold">
+          Flash Sale
+        </div>
+      </ion-col>
+      <ion-col size="6" class="ion-text-right">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" size-lg="3" size-md="4" *ngFor='let product of products'>
+        <ion-card class="ion-no-margin">
+          <img [src]="product?.imgurl || 'assets/imgs/divisions.svg'">
+          <ion-card-header>
+            <ion-card-subtitle>{{ product?.category }}</ion-card-subtitle>
+            <ion-card-title class="font-size-1">{{ product?.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="ion-color-dark">{{ product?.price | currency: 'USD' }}</div>
+            <div><ion-button expand="full" color="danger" size="small" (click)="addToCartModal(product)">
+              {{ cart.isAddedToCart(product?.id) ? 'Added' : 'Add to cart' }}
+            </ion-button></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

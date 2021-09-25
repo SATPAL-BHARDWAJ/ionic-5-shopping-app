@@ -1,0 +1,38 @@
+ion-content {
+    --background: none;
+}
+
+.main-content {
+	background: #ffffff;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.counter-icon {
+	--background: transparent;
+	--border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	color: black;
+	font-size: 7px;
+}
+
+.counter-wrapper {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+    margin: 10px 0px;
+    font-size: 14px;
+}
+
+.close-box {
+	text-align: right;
+	font-size: 20px;
+}
+
+.subnote {
+	margin: 0px;
+	font-size: 0.9rem;
+	padding: 0px 16px;
+	color: #686666;
+}
