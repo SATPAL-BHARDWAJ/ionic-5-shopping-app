@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>
+      My Cart
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray">
+
+  <div *ngIf="cart.items.length < 1" class="noitem">
+    <img  src="assets/images/empty-cart.svg" />
+    <h1>Oops!</h1>
+  </div>
+
+  <ion-list *ngIf="cart.items.length > 0" class="bg-gray">
+    <ion-row *ngFor="let product of cart.items;let i = index;"class="rrow" class="ion-no-padding mt-1 bg-white">
+        <ion-col size="3">
+            <img src="{{product.imgurl || 'assets/images/products.svg'}}" style="height: 100%;"/>
+        </ion-col>
+        <ion-col size="9">
+            <h4 class="brand">{{ product?.name }} <span (click)="cart.removeItem(i)" style="float:right; font-size: 1.4rem;"><ion-icon name="close"></ion-icon></span></h4>
+            <h5 class="amount">{{ product?.price | currency: 'USD'}}</h5>
+            
+            <ion-row class="left">
+              <ion-col size="12" style="display: flex; align-items: center;">
+                <p class="ion-no-margin">Quantity  </p> 
+                <p class="qty-bar ion-no-margin" style="padding: 0px 10px;"> <ion-icon (click)="cart.decreaseCartQty(i)" style="margin-right:5px;" class="theme-color-shade"  name="remove-circle"></ion-icon>{{ product['cartQuantity'] }}<ion-icon (click)="cart.increaseCartQty(i)" style="margin-left:5px;" class="theme-color-shade" name="add-circle"></ion-icon></p>
+              </ion-col>  
+            </ion-row>
+        </ion-col>
+    </ion-row>
+  </ion-list>
+  
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="bg-gray" *ngIf="cart.items.length > 0">
+    <ion-row class="footer-bar">
+      <ion-col class="p-12-15">
+        <div>
+          <h2 class="heading">Order Info</h2>
+          <p class="mb-1">Total Quantity : {{ cart?.total_cart_qty }}</p>
+          <p class="mt-1">Total Price    : {{ cart?.total_price | currency: 'USD' }}</p>
+        </div>
+        <ion-button mode="ios" color="danger" expand="full" (click)="placeOrder()"> Place Order </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

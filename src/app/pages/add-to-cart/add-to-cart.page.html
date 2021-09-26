@@ -1,0 +1,34 @@
+<ion-content>
+  <div class="main-content">
+
+    <div class="close-box">
+      <ion-icon name="close" (click)="dismiss()"></ion-icon>
+    </div>
+
+    <p class="subnote text-align-center">Min order Qty = {{ minOrderQty  }} Pieces</p>
+    <p class="subnote text-align-center">Available Qty = {{ availableQty  }} Pieces</p>
+
+    <div class="counter-wrapper">
+      <div class="counter-label">Quantity</div>     
+      
+      <ion-button class="counter-icon" (click)="decreaseQuantity()">
+        <ion-icon name="remove" slot="icon-only" role="img" aria-label="remove"></ion-icon>
+      </ion-button>
+    
+      <span class="counter-value">{{ cart?.item?.cartQuantity }}</span>
+
+      <ion-button class="counter-icon" (click)="increaseQuantity()">
+        <ion-icon name="add" slot="icon-only" role="img" aria-label="add"></ion-icon>
+      </ion-button>  
+
+      <div class="counter-label">Piece(s)</div>
+      
+    </div>
+
+    
+  
+    <ion-button expand="full" color="danger" class="text-normal" (click)="addToCart()">Done</ion-button>
+   
+  
+  </div>
+</ion-content>
