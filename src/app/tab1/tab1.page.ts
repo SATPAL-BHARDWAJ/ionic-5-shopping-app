@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AddToCartPage } from '../pages/add-to-cart/add-to-cart.page';
+import { ProductFilterPage } from '../pages/product-filter/product-filter.page';
 import { CartService } from '../services/cart/cart.service';
 import { ProductsService } from '../services/products/products.service';
 
@@ -24,7 +25,6 @@ export class Tab1Page {
   };
 
   bannerImages: any = [];
-  products: any = [];
 
   constructor(
     public productService : ProductsService,
@@ -34,7 +34,7 @@ export class Tab1Page {
     private router: Router
   ) {
     this.bannerImages = this.productService.bannerImages;
-    this.products = this.productService.products;
+    this.productService.initProductList();
   }
 
   async addToCartModal(item) {
@@ -61,6 +61,22 @@ export class Tab1Page {
       this.router.navigate(['/tabs/tab2']);
     }
     
+  }
+
+  async filterPage() {
+    const modal = await this.modalCtrl.create({
+      component: ProductFilterPage,
+      //cssClass: ,
+      presentingElement: this.routerOutlet.nativeEl
+    });
+
+    await modal.present();
+    
+    await modal.onWillDismiss().then((result) => {
+      console.log('result :>> ', result);
+    }).catch((err) => {
+      console.log('err :>> ', err);
+    });
   }
 
 }
