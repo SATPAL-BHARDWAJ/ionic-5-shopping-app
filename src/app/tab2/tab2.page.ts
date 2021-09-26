@@ -14,7 +14,6 @@ export class Tab2Page {
 
   ionViewWillEnter() {
     this.cart.unseen = 0;
-    //this.cart.getItems();
     this.cart.getCartTotalQty();
     this.cart.totalPrice();
   }
