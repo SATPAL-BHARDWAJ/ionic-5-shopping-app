@@ -21,6 +21,10 @@
     </ion-slide>
   </ion-slides>
 
+  <div class="result-label" *ngIf="productService.show_result_size">
+    <span>{{ productService.products.length }} Results </span> 
+  </div>
+
   <ion-grid>
     <ion-row class="ion-justify-content-between ion-padding-vertical">
       <ion-col size="4">
@@ -28,12 +32,12 @@
           Flash Sale
         </div>
       </ion-col>
-      <ion-col size="6" class="ion-text-right">
+      <ion-col size="6" class="ion-text-right" (click)='filterPage()' >
         <ion-icon name="filter-outline"></ion-icon>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="6" size-lg="3" size-md="4" *ngFor='let product of products'>
+      <ion-col size="6" size-lg="3" size-md="4" *ngFor='let product of productService.products'>
         <ion-card class="ion-no-margin">
           <img [src]="product?.imgurl || 'assets/imgs/divisions.svg'">
           <ion-card-header>
@@ -48,6 +52,11 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+
+      <div *ngIf="productService.products && productService.products.length === 0" class="noitem">
+        <img src="assets/images/search-icon.svg" />
+        <h1>Oops!</h1>
+      </div>
     </ion-row>
   </ion-grid>
 </ion-content>
