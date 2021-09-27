@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ActionSheetController, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AddToCartPage } from '../pages/add-to-cart/add-to-cart.page';
 import { ProductFilterPage } from '../pages/product-filter/product-filter.page';
 import { CartService } from '../services/cart/cart.service';
@@ -25,16 +25,23 @@ export class Tab1Page {
   };
 
   bannerImages: any = [];
+  //searchTerm: string;
 
   constructor(
     public productService : ProductsService,
     public routerOutlet : IonRouterOutlet,
     public modalCtrl : ModalController,
     public cart : CartService,
-    private router: Router
+    private router: Router,
+    private actionSheetController: ActionSheetController
   ) {
     this.bannerImages = this.productService.bannerImages;
     this.productService.initProductList();
+  }
+
+  search(term: string) {
+    console.log({term});
+    this.productService.searchProducts(term);
   }
 
   async addToCartModal(item) {
@@ -78,5 +85,47 @@ export class Tab1Page {
       console.log('err :>> ', err);
     });
   }
+
+  async sortProducts() {
+    console.log('productService.sort :>> ', this.productService.sort);
+    const actionSheet = await this.actionSheetController.create({
+        header: "Sort by",
+        mode: "ios",
+        cssClass: "sort-products",
+        buttons: [{
+                text: 'Latest Products',
+                role: this.productService.sort.latest ? 'selected' : '',
+                handler: () => {
+                    this.productService.applyLocalSort ( 'id', 'asc', 'latest');
+                }
+            },
+            {
+                text: 'Price - Low to High',
+                role: this.productService.sort.price_lth ? 'selected' : '',
+                handler: () => {
+                  this.productService.applyLocalSort ( 'price', 'desc', 'price_lth' );
+                }
+            },
+            {
+                text: 'Price - High to Low',
+                role: this.productService.sort.price_htl ? 'selected' : '',
+                handler: () => {
+                  this.productService.applyLocalSort ( 'price', 'asc', 'price_htl' );
+                }
+                
+            },
+            {
+              text: 'Cancel',
+              icon: 'close',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+        ]
+    });
+    await actionSheet.present();
+  }
+
 
 }

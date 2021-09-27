@@ -4,7 +4,7 @@
       <img src="assets/images/logo.svg" alt="" srcset="" style="width: 30px;">
     </div>
     
-    <ion-searchbar mode="ios" style="padding: 16px 0px;"></ion-searchbar>
+    <ion-searchbar mode="ios" (ionChange)="search($event.target.value)" debounce="500" style="padding: 16px 0px;"></ion-searchbar>
 
     <ion-buttons slot="end">
       <app-notification-bell></app-notification-bell>
@@ -32,8 +32,9 @@
           Flash Sale
         </div>
       </ion-col>
-      <ion-col size="6" class="ion-text-right" (click)='filterPage()' >
-        <ion-icon name="filter-outline"></ion-icon>
+      <ion-col size="6" class="ion-text-right">
+        <ion-icon name="funnel{{ productService.isSorted() ? '' : '-outline' }}" class="ion-padding-horizontal" (click)='sortProducts()'></ion-icon>
+        <ion-icon name="filter{{ productService.isFiltered() ? '' : '-outline' }}" (click)='filterPage()'></ion-icon>
       </ion-col>
     </ion-row>
     <ion-row>
