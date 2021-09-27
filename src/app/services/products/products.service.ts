@@ -13,16 +13,8 @@ export class ProductsService {
     applied: false
   };
 
-  filterItems: any = [];
-
+  allProducts: any = [];
   cartCount: number = 0;
-
-  listBy: ListBy = {
-    nav: false,
-    search: false,
-    banner: false,
-    details: false
-  };
 
   show_result_size: boolean = true;
 
@@ -78,13 +70,76 @@ export class ProductsService {
     }
   ];
 
+  sort: Sort = {
+    latest: false,
+    price_lth: false,
+    price_htl: false
+  };
+
+  beforeSort : any;
+
   constructor(
   ) { 
     
   }
 
   initProductList() {
-    this.filterItems = this.products;
+    this.allProducts = this.products;
+    this.showResultCount();
+  }
+
+  searchProducts( term: string ) {
+    this.products = [];
+    if ( `${term}`.trim() ) {
+      let NotFoundInName = this.allProducts.map(item => {
+        if ( item.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) < 0 ) {
+          return item;
+        } else {
+          this.products.push(item);
+        }
+      });
+      console.log({NotFoundInName});
+
+      let NotFoundInCategory = NotFoundInName.map(item => {
+        if (item) {
+          if ( item.category.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) < 0 ) {
+            return item;
+          } else {
+            this.products.push(item);
+          }
+        }
+      });
+      console.log({NotFoundInCategory});
+
+      let foundInPrice = NotFoundInCategory.map(item => {
+        if (item) {
+          if ( `${item.price}`.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1 ) {
+            this.products.push(item);
+          }
+        }
+      });
+    } else {
+      this.products = this.allProducts;
+    }
+
+    this.showResultCount();
+  }
+
+  applyLocalSort ( column, order, type )  {
+    this.uncheckSorts();
+    this.sort[type] = true;
+    console.log('column :>> ', column);
+    this.beforeSort = this.products;
+
+    this.products = this.beforeSort.sort((a, b) => {
+      console.log('sort :>> ', a, b);
+      if ( order === 'desc' ) {
+        return a[column] > b[column];
+      } else {
+        return a[column] < b[column];
+      }
+    });
+
     this.showResultCount();
   }
 
@@ -94,28 +149,44 @@ export class ProductsService {
       console.log('Filter applied :>> ');
       this.products = [];
 
-      for(let i = 0; i < this.filterItems.length; i++) {
+      for(let i = 0; i < this.allProducts.length; i++) {
         let foundCategory = true, foundPrice = true;
 
         if ( this.selectedCategories.length > 0 ) {
-          foundCategory = this.selectedCategories.some( val => val.category.toLocaleLowerCase() === this.filterItems[i]['category'].toLocaleLowerCase() && val.isChecked);
+          foundCategory = this.selectedCategories.some( val => val.category.toLocaleLowerCase() === this.allProducts[i]['category'].toLocaleLowerCase() && val.isChecked);
         }
         
         if ( this.priceRange.applied ) {
-          let price = this.filterItems[i]['price'];
+          let price = this.allProducts[i]['price'];
           foundPrice = ( price >= this.priceRange.lower && price <= this.priceRange.upper );
         }
         
         if(foundCategory && foundPrice) {
-          this.products.push(this.filterItems[i]);
+          this.products.push(this.allProducts[i]);
         }
         
       }
     } else {
       console.log('No Filter found:>> ');
-      this.products = this.filterItems;
+      this.products = this.allProducts;
     }
-  } 
+
+    if ( Object.values(this.sort).some(el => el) ) {
+      this.verifySort();
+    }
+
+    this.showResultCount();
+  }
+  
+  verifySort() {
+    if ( this.sort.latest ) {
+      this.applyLocalSort ( 'id', 'asc', 'latest');
+    } else if (this.sort.price_lth) {
+      this.applyLocalSort ( 'price', 'desc', 'price_lth' );
+    } else if (this.sort.price_htl) {
+      this.applyLocalSort ( 'price', 'asc', 'price_htl' );
+    }
+  }
 
 
   showResultCount() {
@@ -127,10 +198,10 @@ export class ProductsService {
 
   resetItems() {
     this.products = [];
-    this.filterItems = [];
+    this.allProducts = [];
+    this.beforeSort = [];
 
     this.uncheckFilters();
-    this.defaultListBy();
   } 
 
   uncheckFilters() {
@@ -151,10 +222,22 @@ export class ProductsService {
     
   }
 
-  defaultListBy() {
-    Object.keys(this.listBy).forEach(key => {
-      this.listBy[key] = false;
+  uncheckSorts() {
+    this.defaultSorting();
+  }
+
+  defaultSorting() {
+    Object.keys(this.sort).forEach(key => {
+      this.sort[key] = false;
     })
+  }
+
+  isSorted() {
+    return Object.values(this.sort).some(el => el);
+  }
+
+  isFiltered() {
+    return this.selectedCategories.length > 0 || this.priceRange.applied;
   }
 
 }
@@ -165,9 +248,8 @@ interface PriceRange {
   applied: boolean
 }
 
-interface ListBy {
-  search: boolean,
-  banner: boolean,
-  nav: boolean,
-  details: boolean
+interface Sort {
+  latest: boolean,
+  price_lth: boolean,
+  price_htl: boolean
 }
