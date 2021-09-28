@@ -39,7 +39,8 @@ export class Tab1Page {
     this.productService.initProductList();
   }
 
-  search(term: string) {
+  search(event: any) {
+    let term = event.target.value;
     console.log({term});
     this.productService.searchProducts(term);
   }
