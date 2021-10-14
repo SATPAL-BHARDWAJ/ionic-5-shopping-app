@@ -34,10 +34,10 @@
       </ion-col>
       <ion-col size="6" class="ion-text-right">
         <ion-icon name="funnel{{ productService.isSorted() ? '' : '-outline' }}" class="ion-padding-horizontal" (click)='sortProducts()'></ion-icon>
-        <ion-icon name="filter{{ productService.isFiltered() ? '' : '-outline' }}" (click)='filterPage()'></ion-icon>
+        <ion-icon data-cy="filter-btn" name="filter{{ productService.isFiltered() ? '' : '-outline' }}" (click)='filterPage()'></ion-icon>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row data-cy="products-list">
       <ion-col size="6" size-lg="3" size-md="4" *ngFor='let product of productService.products'>
         <ion-card class="ion-no-margin">
           <img [src]="product?.imgurl || 'assets/imgs/divisions.svg'">
@@ -47,7 +47,7 @@
           </ion-card-header>
           <ion-card-content>
             <div class="ion-color-dark">{{ product?.price | currency: 'USD' }}</div>
-            <div><ion-button expand="full" color="danger" size="small" (click)="addToCartModal(product)">
+            <div><ion-button data-cy="cart-btn" expand="full" color="danger" size="small" (click)="addToCartModal(product)">
               {{ cart.isAddedToCart(product?.id) ? 'Added' : 'Add to cart' }}
             </ion-button></div>
           </ion-card-content>

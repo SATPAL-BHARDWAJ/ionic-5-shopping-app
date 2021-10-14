@@ -9,17 +9,17 @@
 
   <div class="main-filter-page">
     <div class="filter-menu border-right">
-      <div class="filter-menu-item border-bottom {{ tabs.categories ? 'active' : '' }}" (click)="selectFilter('categories')">
+      <div data-cy="category-filter" class="filter-menu-item border-bottom {{ tabs.categories ? 'active' : '' }}" (click)="selectFilter('categories')">
         Categories
       </div>
       
-      <div class="filter-menu-item border-bottom {{ tabs.price ? 'active' : '' }}" (click)="selectFilter('price')">
+      <div data-cy="price-filter" class="filter-menu-item border-bottom {{ tabs.price ? 'active' : '' }}" (click)="selectFilter('price')">
         Price
       </div>
     </div>
     <div class="filter-content">
 
-      <div *ngIf="tabs.categories" class="filter-content-item">
+      <div *ngIf="tabs.categories" class="filter-content-item" data-cy="categories-filter">
         <div class="list-item border-bottom {{ item.isChecked ? 'active' : '' }}" *ngFor="let item of productService.categories; let i = index" (click)="setFilter(i, 'categories')">
           {{ item?.category }} <ion-icon *ngIf="item.isChecked" name="checkmark-outline"></ion-icon>
         </div>
@@ -28,7 +28,7 @@
 
       <div *ngIf="tabs.price" class="filter-content-item">
         <div class="list-item border-bottom" style="justify-content: center; padding: 5px 0px;">
-          <div class="price-box">
+          <div class="price-box" data-cy="price-box">
             <p class="price-text">From</p>
             <p class="price-input">$<input type="text" [(ngModel)]="productService.priceRange.lower" (change)="price_input()"></p>
             <p class="price-text">to</p>
@@ -47,8 +47,8 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button color="danger" class="text-normal text-bold default-btn btn-link" (click)="clearFilter()"> Clear all </ion-button>
+    <ion-button data-cy="clear-filter" color="danger" slot="start" class="text-normal text-bold default-btn btn-link" (click)="clearFilter()"> Clear all </ion-button>
     
-    <ion-button color="danger" slot="end" class="text-normal" (click)="applyFilter()" style="margin-right: 15px;"> Apply </ion-button>
+    <ion-button data-cy="apply-filter" color="danger" slot="end" class="text-normal" (click)="applyFilter()" style="margin-right: 15px;"> Apply </ion-button>
   </ion-toolbar>
 </ion-footer>
