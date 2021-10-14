@@ -13,19 +13,19 @@
     <h1>Oops!</h1>
   </div>
 
-  <ion-list *ngIf="cart.items.length > 0" class="bg-gray">
-    <ion-row *ngFor="let product of cart.items;let i = index;"class="rrow" class="ion-no-padding mt-1 bg-white">
+  <ion-list *ngIf="cart.items.length > 0" class="bg-gray" data-cy="cart-list">
+    <ion-row *ngFor="let product of cart.items;let i = index;" class="rrow" class="ion-no-padding mt-1 bg-white">
         <ion-col size="3">
             <img src="{{product.imgurl || 'assets/images/products.svg'}}" style="height: 100%;"/>
         </ion-col>
         <ion-col size="9">
-            <h4 class="brand">{{ product?.name }} <span (click)="cart.removeItem(i)" style="float:right; font-size: 1.4rem;"><ion-icon name="close"></ion-icon></span></h4>
+            <h4 class="brand">{{ product?.name }} <span data-cy="rm-item" (click)="cart.removeItem(i)" style="float:right; font-size: 1.4rem;"><ion-icon name="close"></ion-icon></span></h4>
             <h5 class="amount">{{ product?.price | currency: 'USD'}}</h5>
             
             <ion-row class="left">
               <ion-col size="12" style="display: flex; align-items: center;">
                 <p class="ion-no-margin">Quantity  </p> 
-                <p class="qty-bar ion-no-margin" style="padding: 0px 10px;"> <ion-icon (click)="cart.decreaseCartQty(i)" style="margin-right:5px;" class="theme-color-shade"  name="remove-circle"></ion-icon>{{ product['cartQuantity'] }}<ion-icon (click)="cart.increaseCartQty(i)" style="margin-left:5px;" class="theme-color-shade" name="add-circle"></ion-icon></p>
+                <p class="qty-bar ion-no-margin" style="padding: 0px 10px;"> <ion-icon (click)="cart.decreaseCartQty(i)" data-cy="dec-qty" style="margin-right:5px;" class="theme-color-shade"  name="remove-circle"></ion-icon>{{ product['cartQuantity'] }}<ion-icon (click)="cart.increaseCartQty(i)" data-cy="inc-qty" style="margin-left:5px;" class="theme-color-shade" name="add-circle"></ion-icon></p>
               </ion-col>  
             </ion-row>
         </ion-col>
