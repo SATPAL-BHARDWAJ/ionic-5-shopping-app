@@ -4,8 +4,12 @@ This is simple learning purpose ionic shopping app, we are using variable storag
 # Live Demo
 [Ionic 5 Shopping App](https://sbsharma.com/ionic-shopping-cart-app/)
 
+# Support us
+To support my free tutorials and source code you can consider your next hosting purchase with my affiliate link. It will not cost you anything extra but it will give me a small amount of commission. Here is my Hostinger affilate link [Hostinger](https://www.hostg.xyz/SH6KQ).
+
+
 # Contributor 
-[sbsharma.com](https://sbsharma.com/ionic/)
+[Satpal Bhardwaj](https://sbsharma.com/ionic/)
 
 # Follow us
 <a target="_blank" href="https://www.facebook.com/Sbsharma-2798360506847821"><img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white"></a>
